@@ -25,4 +25,5 @@ output.sort()
 
 output.remove(0)
 
-print(output)
+for x in output:
+	print(x, end=' ')
