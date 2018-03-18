@@ -1,39 +1,33 @@
-import operator as op
-def ncr(n, r):
-    r = min(r, n-r)
-    numer = reduce(op.mul, xrange(n, n-r, -1), 1)
-    denom = reduce(op.mul, xrange(1, r+1), 1)
-    return numer//denom
+import sys
+sys.setrecursionlimit(3000)
 
 
-n,m = [int(x) for x in input().split()]
-totalWinning = float(0)
-probabilityWinning = 0
-probability = []
-for x in range(n+m-1):
-	winningPercent = float(input())
-	if (winningPercent == 1):
-		n-=1
-	elif (winningPercent == 0):
-		m-=1
-	else:
-		probability.append(winningPercent)
-	if n == 0:
-		print (str.format('{0:.6f}', 0))
-		exit()
+def recursive(n, currN, currM):
+    if currN == 0:
+        return 0
+    if currM == 0:
+        return 1
+    if memory[currN][n] > -1:
+        return memory[currN][n]
+    else:
+        memory[currN][n] = probs[n]*recursive(n+1, currN, currM-1) + ((1-probs[n])*recursive(n+1, currN-1, currM)) 
+        return memory[currN][n]
 
-	if m == 0:
-		print (str.format('{0:.6f}', 1))
-		exit()
-
-averageWin = float(0)
-for value in probability:
-	averageWin+=value
-averageWin = averageWin/(n+m-1)
-
-for x in range(n,n+m)
-winningChance = 
-
-print(str.format('{0:0.6f}',winningChance))
+        
 
 
+probs = []
+
+N, M = map(int,raw_input().split())
+memory = []
+for x in range(1003):
+    memory.append([])
+    for y in range(2006):
+        memory[x].append(-1)
+orN = N
+orM = M
+for x in range(N+M-1):
+
+    probs.append(float(input()))
+    
+print (str.format('{0:f}',(recursive(0,orN,orM))))
