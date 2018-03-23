@@ -1,66 +1,53 @@
 from collections import defaultdict
-N, M = map(int,input().split())
-inputString = input().split(" ")
+MAXN = 10000
+parent = []
+n,m = [int(x) for x in input().split()]
+def find(x):
+    if(parent[x]==x):
+        return x
+    else:
+        parent[x] = find(parent[x])
+        return parent[x]
+#make y the parent of x. 
+def unite(x,y):
+    parent[find(x)] = find(y)
 
+for i in range(MAXN):
+    parent.append(i)
+
+
+inputString = input().split()
 sentence = defaultdict(int)
-thesaurus = defaultdict(dict)
-
 for word in inputString:
     sentence[word] += 1
 
-one, two = input().split(" ")
-if len(one) > len(two):
-    shorter = two
-    longer = one
-else:
-    shorter = one
-    longer = two
-thesaurus[shorter][longer] = 0
-thesaurus[shorter][shorter] = 0
-for y in range(1,M):
-    one, two = input().split(" ")
-    if len(one) > len(two):
-        shorter = two
-        longer = one
+entrees = {}
+findSmallest = {}
+counter = 0
+for x in range(m):
+    first, second = input().split()
+    if entrees.get(first) == None:
+        findSmallest[counter] = first
+        entrees[first] = counter
+        counter += 1
+    if entrees.get(second) == None:
+        findSmallest[counter] = second
+        entrees[second] = counter 
+        counter += 1
+    if len(findSmallest[find(entrees[first])]) < len(findSmallest[find(entrees[second])]):
+        unite(entrees[findSmallest[find(entrees[second])]],entrees[findSmallest[find(entrees[first])]])
     else:
-        shorter = one
-        longer = two
-    add = True
-    replace = False
-    for x in thesaurus:
-        if thesaurus.get(x).get(one)!= None:
-            add = False
-            if thesaurus.get(x).get(two)== None:
-                thesaurus.get(x)[two]=0
-            if len(shorter) < len(x):
-                replace = True
-                currX = x
-                break
-        elif thesaurus.get(x).get(two)!= None:
-            add = False
-            if thesaurus.get(x).get(one)== None:
-                thesaurus.get(x)[one]=0
-            if len(shorter) < len(x):
-                replace = True
-                currX = x
-                break
-
-    if add == True:
-        thesaurus[shorter][longer]=0
-        thesaurus[shorter][shorter]=0
-    if replace == True:
-        thesaurus[shorter]=thesaurus[currX]
-        thesaurus.pop(currX)
+        unite(entrees[findSmallest[find(entrees[first])]],entrees[findSmallest[find(entrees[second])]])
 count = 0
-
 for key in sentence:
-    exists = False
-    for x in thesaurus:
-        if key in thesaurus[x]:
-            exists = True
-            count+= len(x)*sentence[key]
-            break
-    if exists == False:
+    if entrees.get(key) != None:
+        count += len(findSmallest[find(entrees[key])])* sentence[key]
+    else:
         count+= len(key)*sentence[key]
-
 print(count)
+
+
+
+
+
+
