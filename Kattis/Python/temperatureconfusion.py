@@ -6,3 +6,4 @@ denominator = (b*9)
 greatest = int(math.gcd(numerator,denominator))
 
 print(str(int(numerator/greatest))+ "/" + str(int(denominator/greatest)))
+
