@@ -19,5 +19,4 @@ while True:
 	if counterTime == n or counterTask == m:
 		break
 
-
 print(counterTask)
