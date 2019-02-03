@@ -1,7 +1,5 @@
-line1 = input()
-totalwidth,totalinputs = (int(x) for x in line1.split())
-line2 = input()
-inputs = [int(x) for x in line2.split()] 
+totalwidth,totalinputs = [int(x) for x in input().split()]
+inputs = [int(x) for x in input().split()] 
 output = []
 for x in range(totalinputs):
 	for y in range(totalinputs):
