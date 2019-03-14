@@ -1,5 +1,9 @@
-print ("1000 1000")
-for x in range (1000):
-	for y in range(1000):
-		print(0, end = '')
-	print()
+def bin_search(low,high,val):
+	if low == high:
+		return -1
+	mid = (low+high)//2
+	if val == mid:
+		return val
+	if mid > val:
+		return bin_search(mid+1,high,val)
+	return bin_search(low,mid-1,val)
