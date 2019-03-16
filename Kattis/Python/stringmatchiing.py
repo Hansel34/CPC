@@ -1,35 +1,47 @@
 from collections import deque
 
+
+
 while True:
     try:
         pattern = raw_input()
         text = raw_input()
 
-        pattern_d = 0
-        prime_number = 97
-        mod = 10**9 + 9
-        text_d = 0
-        
-        answer = []
-        for i,c in enumerate(pattern):
-            pattern_d += ord(c) * (prime_number**i)
-        pattern_d = pattern_d % mod
+        def check(index):
+            return all(text[(i + index) % len(A)] == x for i, x in enumerate(B))
 
-        for i,c in enumerate(text):
-            if i < len(pattern):
-                text_d += ord(c) * (prime_number**i)
-                if i == len(pattern)-1:
-                    text_d = text_d % mod
-            else:
-                if pattern_d == text_d:
-                    answer.append(i-len(pattern))
-                text_d -= ord(text[i-len(pattern)])
-                text_d /= prime_number
-                text_d += ord(c) * (prime_number**(len(pattern)-1)% mod)
-                
-        if pattern_d == text_d:
-            answer.append(len(text)-len(pattern))
+        q = (len(B) - 1) // len(A) + 1
 
-        print(" ".join([str(x) for x in answer]))
+        p, MOD = 113, 10**9 + 7
+        p_inv = pow(p, MOD-2, MOD)
+        power = 1
+
+        b_hash = 0
+        for x in map(ord, B):
+            b_hash += power * x
+            b_hash %= MOD
+            power = (power * p) % MOD
+
+        a_hash = 0
+        power = 1
+        for i in xrange(len(B)):
+            a_hash += power * ord(A[i % len(A)])
+            a_hash %= MOD
+            power = (power * p) % MOD
+
+        if a_hash == b_hash and check(0): return q
+
+        power = (power * p_inv) % MOD
+        for i in xrange(len(B), (q+1) * len(A)):
+            a_hash = (a_hash - ord(A[(i - len(B)) % len(A)])) * p_inv
+            a_hash += power * ord(A[i % len(A)])
+            a_hash %= MOD
+            if a_hash == b_hash and check(i - len(B) + 1):
+                return q if i < q * len(A) else q+1
+
+
+
+
+
     except EOFError:
         break
