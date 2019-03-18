@@ -2,14 +2,14 @@
 # K number of legs
 # Players are across top of page
 # Characters are at the bottom
-
+from sys import stdin
 #connect lines
 
-chars, legs = [int(x) for x in input().split()]
+chars, legs = [int(x) for x in stdin.readline().split()]
 all_legs = []
 
 for _ in range(legs):
-    index, height = [int(x) for x in input().split()]
+    index, height = [int(x) for x in stdin.readline().split()]
     all_legs.append([height,index])
 
 all_legs.sort()
