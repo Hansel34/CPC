@@ -32,7 +32,6 @@ int main() {
   cin >> n >> queries;
   for (int i = 0; i < n; i++) 
   	t[n+i]=0;
-  build();
 
   for(int i = 0; i< queries; i++)
   {
