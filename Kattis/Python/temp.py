@@ -1,9 +1,6 @@
-def bin_search(low,high,val):
-	if low == high:
-		return -1
-	mid = (low+high)//2
-	if val == mid:
-		return val
-	if mid > val:
-		return bin_search(mid+1,high,val)
-	return bin_search(low,mid-1,val)
+print(1000,1000)
+for i in range(1000):
+	for j in range(1000):
+		print(0,end='')
+	print()
+print(0)
