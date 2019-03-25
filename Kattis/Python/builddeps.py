@@ -3,11 +3,10 @@ from collections import defaultdict
 files = int(input())
 
 dependecies = defaultdict(list)
-names = []
 visited = set()
 for _ in range(files):
     d = input().split()
-    names.append(d[0][:-1])
+
     if len(d) > 1:
         for f in d[1:]:
             dependecies[f].append(d[0][:-1])
